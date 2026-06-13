@@ -2,17 +2,46 @@
 <html>
 <head>
   <title>FluentNest AI Teacher</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    #chat { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: auto; }
+    input { width: 70%; padding: 10px; }
+    button { padding: 10px; }
+  </style>
 </head>
+
 <body>
-  <h1>Welcome to FluentNest AI English Teacher</h1>
+  <h1>FluentNest AI English Teacher 🤖</h1>
 
-  <p>Practice English speaking step by step with AI help.</p>
+  <div id="chat"></div>
 
-  <button onclick="start()">Start Speaking</button>
+  <br>
+
+  <input id="userInput" placeholder="Type your English sentence..." />
+  <button onclick="talk()">Send</button>
 
   <script>
-    function start() {
-      alert("Next step: we will add real AI + voice speaking");
+    function talk() {
+      let input = document.getElementById("userInput").value;
+      let chat = document.getElementById("chat");
+
+      if(input.trim() === "") return;
+
+      chat.innerHTML += "<p><b>You:</b> " + input + "</p>";
+
+      let reply = "";
+
+      if(input.toLowerCase().includes("hello")) {
+        reply = "Hello! 👋 How are you today?";
+      } else if(input.toLowerCase().includes("my name is")) {
+        reply = "Nice to meet you! 😊 Tell me more about yourself.";
+      } else {
+        reply = "Good try 👍 Try speaking in full English sentences.";
+      }
+
+      chat.innerHTML += "<p><b>AI Teacher:</b> " + reply + "</p>";
+
+      document.getElementById("userInput").value = "";
     }
   </script>
 </body>
