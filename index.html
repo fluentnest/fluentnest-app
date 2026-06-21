@@ -57,21 +57,20 @@ input {
     <button onclick="talk()">Send</button>
 
   <script>
-    let lastTopic = "";
-    async function talk() {
+async function talk() {
   let input = document.getElementById("userInput").value;
   let chat = document.getElementById("chat");
 
-  if(input.trim() === "") return;
+  if (input.trim() === "") return;
 
   chat.innerHTML += "<p><b>You:</b> " + input + "</p>";
-
   document.getElementById("userInput").value = "";
 
-  chat.innerHTML += "<p><b>FluentNest AI:</b> Thinking...</p>";
+  chat.innerHTML += "<p><b>AI:</b> Thinking...</p>";
 
-  try {
-    let response = await fetch("https://api-inference.huggingface.co/models/facebook/blenderbot-400M-distill", {
+  let res = await fetch(
+    "https://api.allorigins.win/raw?url=https://api-inference.huggingface.co/models/facebook/blenderbot-400M-distill",
+    {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -79,59 +78,15 @@ input {
       body: JSON.stringify({
         inputs: input
       })
-    });
-
-    let data = await response.json();
-
-    let reply = data?.[0]?.generated_text || "Sorry, I couldn't respond.";
-
-    chat.innerHTML += "<p><b>FluentNest AI:</b> " + reply + "</p>";
-
-  } catch (error) {
-    chat.innerHTML += "<p><b>FluentNest AI:</b> Error connecting to AI 😢</p>";
-  }
     }
-    
-      
-      
-      let input = document.getElementById("userInput").value;
-      let chat = document.getElementById("chat");
+  );
 
-      if(input.trim() === "") return;
+  let data = await res.json();
 
-      chat.innerHTML += "<p><b>You:</b> " + input + "</p>";
+  let reply = data?.[0]?.generated_text || "Sorry, I couldn't respond.";
 
-      let reply = "";
-let text = input.toLowerCase();
-
-if(text.includes("hello") || text.includes("hi")) {
-  lastTopic = "greeting";
-  reply = "Hello! 👋 How are you feeling today?";
-
-} else if(text.includes("name")) {
-  lastTopic = "intro";
-  reply = "Nice to meet you 😊 Tell me more about yourself.";
-
-} else if(text.includes("sad") || text.includes("bad") || text.includes("tired")) {
-  reply = "I'm here for you. What happened?";
-
-} else if(text.includes("good") || text.includes("nice") || text.includes("great")) {
-  reply = "That's nice 👍 Tell me more.";
-
-} else if(lastTopic === "greeting") {
-  reply = "I'm glad you're here 😊 What are you doing today?";
-
-} else if(lastTopic === "intro") {
-  reply = "That’s interesting! Tell me more about yourself.";
-
-} else {
-  reply = "Hmm 🤔 I want to understand you better. Can you explain more?";
+  chat.innerHTML += "<p><b>AI:</b> " + reply + "</p>";
 }
-
-      chat.innerHTML += "<p><b>AI Teacher:</b> " + reply + "</p>";
-
-      document.getElementById("userInput").value = "";
-    }
   </script>
 </body>
 </html>
