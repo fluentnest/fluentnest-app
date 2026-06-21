@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>FluentNest AI Teacher</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -78,10 +79,14 @@ async function talk() {
 
   if (input.trim() === "") return;
 
+  // show user message
   chat.innerHTML += "<p><b>You:</b> " + input + "</p>";
   document.getElementById("userInput").value = "";
 
-  chat.innerHTML += "<p><b>AI:</b> Thinking...</p>";
+  // create thinking bubble
+  let thinking = document.createElement("p");
+  thinking.innerHTML = "<b>AI:</b> Thinking...";
+  chat.appendChild(thinking);
 
   try {
     let res = await fetch(
@@ -97,12 +102,15 @@ async function talk() {
 
     let data = await res.json();
 
-    let reply = data?.[0]?.generated_text || "I couldn't understand that, try again.";
+    let reply =
+      data?.[0]?.generated_text ||
+      "Sorry, I couldn't understand that.";
 
-    chat.innerHTML += "<p><b>AI:</b> " + reply + "</p>";
+    // replace thinking text with reply
+    thinking.innerHTML = "<b>AI:</b> " + reply;
 
   } catch (error) {
-    chat.innerHTML += "<p><b>AI:</b> Error connecting to AI server.</p>";
+    thinking.innerHTML = "<b>AI:</b> Error connecting to AI server.";
   }
 }
 </script>
