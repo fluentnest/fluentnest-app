@@ -69,38 +69,25 @@ input {
       chat.innerHTML += "<p><b>You:</b> " + input + "</p>";
 
       let reply = "";
-      if(input.toLowerCase().includes("hello")) {
+let text = input.toLowerCase();
+
+if(text.includes("hello") || text.includes("hi")) {
   lastTopic = "greeting";
-  reply = "Hello! 👋 How are you today?";
+  reply = "Hello! 👋 How are you feeling today?";
 
-} else if(input.toLowerCase().includes("my name is")) {
+} else if(text.includes("name")) {
   lastTopic = "intro";
-  reply = "Nice to meet you! 😊 Tell me more about yourself.";
+  reply = "Nice to meet you 😊 Tell me more about yourself.";
 
-} else if(input.toLowerCase().includes("exam")) {
-  lastTopic = "exam";
-  reply = "Don't worry. What subject are you preparing for?";
+} else if(text.includes("sad") || text.includes("bad") || text.includes("tired")) {
+  reply = "I'm here for you. What happened?";
 
-} else if(input.toLowerCase().includes("movie")) {
-  lastTopic = "movie";
-  reply = "Which movie did you watch? Would you recommend it?";
-
-} else if(input.toLowerCase().includes("college")) {
-  lastTopic = "college";
-  reply = "How is your college life going?";
-
-} else if(lastTopic === "college") {
-  reply = "Tell me more about your college experience.";
-
-} else if(lastTopic === "exam") {
-  reply = "Which subject is difficult for you?";
-
-} else if(lastTopic === "movie") {
-  reply = "Who was your favourite character in the movie?";
+} else if(text.includes("good") || text.includes("nice") || text.includes("great")) {
+  reply = "That's nice 👍 Tell me more.";
 
 } else {
-  reply = "I want to understand you better 😊 Can you explain a little more?";
-      }
+  reply = "Interesting 🤔 Can you explain a little more?";
+}
 
       chat.innerHTML += "<p><b>AI Teacher:</b> " + reply + "</p>";
 
