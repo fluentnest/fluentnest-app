@@ -58,6 +58,8 @@ input {
 
   <script>
     function talk() {
+      let lastTopic = "";
+      
       let input = document.getElementById("userInput").value;
       let chat = document.getElementById("chat");
 
@@ -66,19 +68,37 @@ input {
       chat.innerHTML += "<p><b>You:</b> " + input + "</p>";
 
       let reply = "";
-
       if(input.toLowerCase().includes("hello")) {
-        reply = "Hello! 👋 How are you today?";
-      } else if(input.toLowerCase().includes("my name is")) {
-        reply = "Nice to meet you! 😊 Tell me more about yourself.";
-      } else if(input.toLowerCase().includes("exam")) {
+  lastTopic = "greeting";
+  reply = "Hello! 👋 How are you today?";
+
+} else if(input.toLowerCase().includes("my name is")) {
+  lastTopic = "intro";
+  reply = "Nice to meet you! 😊 Tell me more about yourself.";
+
+} else if(input.toLowerCase().includes("exam")) {
+  lastTopic = "exam";
   reply = "Don't worry. What subject are you preparing for?";
+
 } else if(input.toLowerCase().includes("movie")) {
+  lastTopic = "movie";
   reply = "Which movie did you watch? Would you recommend it?";
+
 } else if(input.toLowerCase().includes("college")) {
+  lastTopic = "college";
   reply = "How is your college life going?";
+
+} else if(lastTopic === "college") {
+  reply = "Tell me more about your college experience.";
+
+} else if(lastTopic === "exam") {
+  reply = "Which subject is difficult for you?";
+
+} else if(lastTopic === "movie") {
+  reply = "Who was your favourite character in the movie?";
+
 } else {
-  reply = "Good try 👍 Try speaking in full English sentences.";
+  reply = "I want to understand you better 😊 Can you explain a little more?";
       }
 
       chat.innerHTML += "<p><b>AI Teacher:</b> " + reply + "</p>";
