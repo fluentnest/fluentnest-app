@@ -57,8 +57,9 @@ input {
     <button onclick="talk()">Send</button>
 
   <script>
+    let lastTopic = "";
     function talk() {
-      let lastTopic = "";
+      
       
       let input = document.getElementById("userInput").value;
       let chat = document.getElementById("chat");
