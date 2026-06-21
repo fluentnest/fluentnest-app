@@ -58,8 +58,40 @@ input {
 
   <script>
     let lastTopic = "";
+    async function talk() {
+  let input = document.getElementById("userInput").value;
+  let chat = document.getElementById("chat");
+
+  if(input.trim() === "") return;
+
+  chat.innerHTML += "<p><b>You:</b> " + input + "</p>";
+
+  document.getElementById("userInput").value = "";
+
+  chat.innerHTML += "<p><b>FluentNest AI:</b> Thinking...</p>";
+
+  try {
+    let response = await fetch("https://api-inference.huggingface.co/models/facebook/blenderbot-400M-distill", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        inputs: input
+      })
+    });
+
+    let data = await response.json();
+
+    let reply = data?.[0]?.generated_text || "Sorry, I couldn't respond.";
+
+    chat.innerHTML += "<p><b>FluentNest AI:</b> " + reply + "</p>";
+
+  } catch (error) {
+    chat.innerHTML += "<p><b>FluentNest AI:</b> Error connecting to AI 😢</p>";
+  }
+    }
     
-    function talk() {
       
       
       let input = document.getElementById("userInput").value;
